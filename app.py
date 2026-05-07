@@ -47,5 +47,4 @@ def process(message):
     except: bot.reply_to(message, "❌ أرسل أرقام فقط")
 
 if __name__ == "__main__":
-    bot.remove_webhook()
     bot.polling(none_stop=True)
