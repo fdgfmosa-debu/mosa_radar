@@ -2,8 +2,8 @@ import telebot
 import time
 import random
 
-# --- الإعدادات الأساسية ---
-TOKEN = '8692440137:AAGp0hzZQ0raZez6DVwYXiZOr4z_8qGZK-U'
+# --- الإعدادات الأساسية (التوكن الجديد) ---
+TOKEN = '8434440471:AAHmWZmlCczRnn8SlRkzD9amncDSNsU0g'
 bot = telebot.TeleBot(TOKEN)
 
 # --- روابط الصور الملكية ---
@@ -28,8 +28,10 @@ def analyze_pattern(data):
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
-    try: bot.send_photo(message.chat.id, IMG_WELCOME, caption="👑 رادار موسى الملكي جاهز!", parse_mode='Markdown')
-    except: bot.reply_to(message, "👑 رادار موسى الملكي جاهز!")
+    try: 
+        bot.send_photo(message.chat.id, IMG_WELCOME, caption="👑 رادار موسى الملكي جاهز!", parse_mode='Markdown')
+    except: 
+        bot.reply_to(message, "👑 رادار موسى الملكي جاهز!")
 
 @bot.message_handler(func=lambda message: True)
 def process(message):
@@ -41,11 +43,15 @@ def process(message):
         time.sleep(1)
         status, response = analyze_pattern(history)
         bot.delete_message(message.chat.id, loading.message_id)
-        if status == "signal": bot.send_photo(message.chat.id, IMG_SIGNAL, caption=response, parse_mode='Markdown')
-        elif status == "warning": bot.send_photo(message.chat.id, IMG_WARNING, caption=response, parse_mode='Markdown')
-        else: bot.send_message(message.chat.id, response, parse_mode='Markdown')
-    except: bot.reply_to(message, "❌ أرسل أرقام فقط")
+        
+        if status == "signal": 
+            bot.send_photo(message.chat.id, IMG_SIGNAL, caption=response, parse_mode='Markdown')
+        elif status == "warning": 
+            bot.send_photo(message.chat.id, IMG_WARNING, caption=response, parse_mode='Markdown')
+        else: 
+            bot.send_message(message.chat.id, response, parse_mode='Markdown')
+    except: 
+        bot.reply_to(message, "❌ أرسل أرقام فقط")
 
 if __name__ == "__main__":
-    bot.remove_webhook()
     bot.polling(none_stop=True)
